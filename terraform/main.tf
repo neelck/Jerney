@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.90"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 # 1. Resource Group
 resource "azurerm_resource_group" "aks_rg" {
   name     = var.resource_group_name
