@@ -1,3 +1,6 @@
+# Add this data block to fetch your current Azure configuration automatically
+data "azurerm_client_config" "current" {}
+
 # 1. Resource Group
 resource "azurerm_resource_group" "aks_rg" {
   name     = var.resource_group_name
@@ -25,7 +28,8 @@ module "aks" {
 
   identity_type                     = "SystemAssigned"
   role_based_access_control_enabled = true
-  rbac_aad_azure_rbac_enabled = false
+  rbac_aad_azure_rbac_enabled = true
+  rbac_aad_tenant_id = data.azurerm_client_config.current.tenant_id
 
   # FIX 2: Force the module to wait for the resource group to be created
   depends_on = [azurerm_resource_group.aks_rg]
