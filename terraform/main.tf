@@ -25,7 +25,7 @@ module "aks" {
 
   identity_type                     = "SystemAssigned"
   role_based_access_control_enabled = true
-  rbac_aad = false
+  rbac_aad_azure_rbac_enabled = false
 
   # FIX 2: Force the module to wait for the resource group to be created
   depends_on = [azurerm_resource_group.aks_rg]
