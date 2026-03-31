@@ -13,7 +13,7 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = false
 }
 
-# 3. AKS Cluster
+# 3. AKS Cluster (Updated to v11)
 module "aks" {
   source  = "Azure/aks/azurerm"
   version = "11.0.0" 
@@ -35,12 +35,13 @@ module "aks" {
   log_analytics_workspace_enabled = false
 }
 
-# 4. Role Assignment: Allow AKS to pull images from ACR
+# 4. Role Assignment (Updated for AzureRM v4 compatibility)
 resource "azurerm_role_assignment" "aks_to_acr" {
   principal_id                     = module.aks.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
   scope                            = azurerm_container_registry.acr.id
   skip_service_principal_aad_check = true
+  principal_type                   = "ServicePrincipal" # Required in AzureRM v4 when skipping AAD check
 }
 
 # 5. Outputs
