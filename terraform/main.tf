@@ -16,7 +16,7 @@ resource "azurerm_container_registry" "acr" {
 # 3. AKS Cluster
 module "aks" {
   source  = "Azure/aks/azurerm"
-  version = "8.0.0" 
+  version = "11.0.0" 
 
   resource_group_name = azurerm_resource_group.aks_rg.name
   location            = azurerm_resource_group.aks_rg.location
