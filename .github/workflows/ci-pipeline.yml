@@ -35,8 +35,8 @@ env:
   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   ACR_LOGIN_SERVER: ${{ vars.ACR_LOGIN_SERVER }}
-  BACKEND_IMAGE: ${{ vars.ACR_LOGIN_SERVER }}/${{ github.repository }}/jerney-backend
-  FRONTEND_IMAGE: ${{ vars.ACR_LOGIN_SERVER }}/${{ github.repository }}/jerney-frontend
+  BACKEND_IMAGE: ${{ vars.ACR_LOGIN_SERVER }}/jerney/jerney-backend
+  FRONTEND_IMAGE: ${{ vars.ACR_LOGIN_SERVER }}/jerney/jerney-frontend
 
 jobs:
   # ==============================================================
