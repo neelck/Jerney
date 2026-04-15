@@ -108,7 +108,8 @@ jobs:
     needs: sca
     permissions:
       contents: read
-      packages: write # Needed to push to GHCR
+      packages: write
+      id-token: write # Needed for OIDC authentication
     strategy:
       matrix:
         component: [backend, frontend]
