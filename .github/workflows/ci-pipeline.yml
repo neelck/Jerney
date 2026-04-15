@@ -8,6 +8,7 @@
 name: Jerney DevSecOps Pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches: ["*"]
     # Triggers pipeline only if code in these directories changes
