@@ -28,7 +28,6 @@ on:
 # Security: restrict default permissions to read-only
 permissions:
   id-token: write # Needed for authentication to Azure via OIDC
-#   packages: write # Needed to push to GHCR
   contents: read
 
 env:
