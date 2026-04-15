@@ -187,7 +187,7 @@ spec:
               echo "DB is ready!"
       containers:
         - name: backend
-          image: acraksjerneydemo123.azurecr.io/neelck/jerney/jerney-backend:eef2db9
+          image: acraksjerneydemo123.azurecr.io/neelck/jerney/jerney-backend:688fc26
           ports:
             - containerPort: 5000
               protocol: TCP
@@ -294,7 +294,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: frontend
-          image: acraksjerneydemo123.azurecr.io/neelck/jerney/jerney-frontend:eef2db9
+          image: acraksjerneydemo123.azurecr.io/neelck/jerney/jerney-frontend:688fc26
           ports:
             - containerPort: 8080
               protocol: TCP
