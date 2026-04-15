@@ -1,15 +1,5 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.90"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
+# Add this data block to fetch your current Azure configuration automatically
+data "azurerm_client_config" "current" {}
 
 # 1. Resource Group
 resource "azurerm_resource_group" "aks_rg" {
@@ -26,10 +16,10 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = false
 }
 
-# 3. AKS Cluster
+# 3. AKS Cluster (Updated to v11)
 module "aks" {
   source  = "Azure/aks/azurerm"
-  version = "8.0.0" 
+  version = "11.0.0" 
 
   resource_group_name = azurerm_resource_group.aks_rg.name
   location            = azurerm_resource_group.aks_rg.location
@@ -38,6 +28,11 @@ module "aks" {
 
   identity_type                     = "SystemAssigned"
   role_based_access_control_enabled = true
+  rbac_aad_azure_rbac_enabled = true
+  rbac_aad_tenant_id = data.azurerm_client_config.current.tenant_id
+
+  # FIX 2: Force the module to wait for the resource group to be created
+  depends_on = [azurerm_resource_group.aks_rg]
 
   network_plugin = "azure"
   network_policy = "azure"
@@ -48,12 +43,13 @@ module "aks" {
   log_analytics_workspace_enabled = false
 }
 
-# 4. Role Assignment: Allow AKS to pull images from ACR
+# 4. Role Assignment (Updated for AzureRM v4 compatibility)
 resource "azurerm_role_assignment" "aks_to_acr" {
   principal_id                     = module.aks.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
   scope                            = azurerm_container_registry.acr.id
   skip_service_principal_aad_check = true
+  principal_type                   = "ServicePrincipal" # Required in AzureRM v4 when skipping AAD check
 }
 
 # 5. Outputs

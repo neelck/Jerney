@@ -30,6 +30,9 @@ jobs:
   terraform:
     name: 'Terraform Plan & Apply'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform # Points to your terraform folder
     
     # We define standard environment variables for the Azure Provider to use OIDC securely
     env:
